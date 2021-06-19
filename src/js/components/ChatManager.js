@@ -4,6 +4,7 @@ import FormChat from './forms/FormChat';
 
 export default class ChatManager {
   constructor(element) {
+    // localStorage.removeItem('login');
     if (typeof element === 'string') this.container = document.querySelector(element);
     EventBus.subscribe('login', this.login.bind(this));
     this.container = element;
@@ -47,7 +48,7 @@ export default class ChatManager {
 
   start() {
     localStorage.setItem('login', this.login);
-    this.ws = new WebSocket('ws://ahj-ws-backend.herokuapp.com');
+    this.ws = new WebSocket('wss://ahj-ws-backend.herokuapp.com');
     this.registerEvents();
     this.drawChat();
     this.formChat = new FormChat(this.container.querySelector('.form-input-messages'), this.login, this.ws);
