@@ -46,7 +46,7 @@ export default class ChatManager {
 
   start() {
     sessionStorage.setItem('login', this.login);
-    this.ws = new WebSocket('wss://ahj-ws-backend.herokuapp.com:7070');
+    this.ws = new WebSocket('wss://ahj-ws-backend.herokuapp.com');
     this.registerEvents();
     this.drawChat();
     this.formChat = new FormChat(this.container.querySelector('.form-input-messages'), this.login, this.ws);
