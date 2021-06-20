@@ -12,7 +12,7 @@ export default class FormLogin {
   async onSubmit(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const url = new URL('https://ahj-ws-backend.herokuapp.com');
+    const url = new URL('https://ahj-ws-backend.herokuapp.com/');
     const response = await fetch(url.toString(), {
       method: 'POST',
       body: formData,

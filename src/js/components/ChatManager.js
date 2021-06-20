@@ -4,7 +4,6 @@ import FormChat from './forms/FormChat';
 
 export default class ChatManager {
   constructor(element) {
-    // localStorage.removeItem('login');
     if (typeof element === 'string') this.container = document.querySelector(element);
     EventBus.subscribe('login', this.login.bind(this));
     this.container = element;
@@ -18,8 +17,8 @@ export default class ChatManager {
   }
 
   async init() {
-    if (localStorage.getItem('login')) {
-      this.login = localStorage.getItem('login');
+    if (sessionStorage.getItem('login')) {
+      this.login = sessionStorage.getItem('login');
       const url = new URL(`https://ahj-ws-backend.herokuapp.com/?method=login&login=${this.login}`);
       const response = await fetch(url.toString());
       const result = await response.json();
@@ -33,10 +32,9 @@ export default class ChatManager {
 
   registerEvents() {
     this.ws.addEventListener('message', (response) => this.wsOnMessage(response));
-    window.addEventListener('unload', () => this.ws.send(JSON.stringify({
-      type: 'close',
-      login: this.login,
-    })));
+    window.addEventListener('beforeunload', () => {
+      this.ws.send(JSON.stringify({ type: 'close', login: this.login }));
+    });
   }
 
   login(object) {
@@ -47,8 +45,8 @@ export default class ChatManager {
   }
 
   start() {
-    localStorage.setItem('login', this.login);
-    this.ws = new WebSocket('wss://ahj-ws-backend.herokuapp.com');
+    sessionStorage.setItem('login', this.login);
+    this.ws = new WebSocket('wss://ahj-ws-backend.herokuapp.com:7070');
     this.registerEvents();
     this.drawChat();
     this.formChat = new FormChat(this.container.querySelector('.form-input-messages'), this.login, this.ws);
