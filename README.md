@@ -1,5 +1,6 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/a8g03352cdqclc18?svg=true)](https://ci.appveyor.com/project/zuev720/ahj-8-1)
 
+[GitHub-pages](https://zuev720.github.io/ahj-8.1/)
 
 ## Чат
 
